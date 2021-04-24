@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import scriptLoader from "react-async-script-loader";
+import Coat from "../assets/img/coat.jpg";
+import Spinner from "./Spinner";
 
 const CLIENT = {
     sandbox:
@@ -83,6 +85,39 @@ class PaypalButton extends React.Component {
           this.setState({ showButtons: false, paid: true });
         });
     };
+
+    render() {
+        const { showButtons, loading, paid } = this.state;
+    
+        return (
+          <div className="main">
+            {loading && <Spinner />}
+    
+            {showButtons && (
+              <div>
+                <div>
+                  <h2>Items: HERITAGE SINGLE BREASTED TRENCH COAT </h2>
+                  <h2>Total checkout Amount £179</h2>
+                </div>
+    
+                <PayPalButton
+                  createOrder={(data, actions) => this.createOrder(data, actions)}
+                  onApprove={(data, actions) => this.onApprove(data, actions)}
+                />
+              </div>
+            )}
+    
+            {paid && (
+              <div className="main">
+                <img alt="HERITAGE SINGLE BREASTED TRENCH COAT" src={Coat} />
+                <h2>
+                  Congrats! you just paid your favourite Tommy's tranch-coat"
+                </h2>
+              </div>
+            )}
+          </div>
+        );
+    }
     
 }
   
